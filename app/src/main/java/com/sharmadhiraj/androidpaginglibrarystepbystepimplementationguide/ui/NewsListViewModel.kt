@@ -1,22 +1,31 @@
-package com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide
+package com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.base.BaseViewModel
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.repository.NewsDataSource
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.repository.NewsDataSourceFactory
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.util.State
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.model.News
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.network.NetworkService
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
-class NewsListViewModel : ViewModel() {
+class NewsListViewModel : BaseViewModel() {
 
-    private val networkService = NetworkService.getService()
+   // private val networkService = NetworkService.getService()
+   @Inject
+   lateinit var networkService: NetworkService
     var newsList: LiveData<PagedList<News>>
     private val compositeDisposable = CompositeDisposable()
     private val pageSize = 5
     private val newsDataSourceFactory: NewsDataSourceFactory
 
     init {
-        newsDataSourceFactory = NewsDataSourceFactory(compositeDisposable, networkService)
+        newsDataSourceFactory = NewsDataSourceFactory(networkService, compositeDisposable)
         val config = PagedList.Config.Builder()
                 .setPageSize(pageSize)
                 .setInitialLoadSizeHint(pageSize * 2)

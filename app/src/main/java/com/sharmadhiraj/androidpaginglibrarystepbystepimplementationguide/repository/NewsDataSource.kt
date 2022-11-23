@@ -1,18 +1,23 @@
-package com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide
+package com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.repository
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.util.State
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.model.News
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.network.NetworkService
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class NewsDataSource(
-        private val networkService: NetworkService,
+class NewsDataSource(private val networkService: NetworkService,
         private val compositeDisposable: CompositeDisposable)
     : PageKeyedDataSource<Int, News>() {
-
+    //private val networkService: NetworkService,
+//    @Inject
+//    lateinit var networkService: NetworkService
     var state: MutableLiveData<State> = MutableLiveData()
     private var retryCompletable: Completable? = null
 

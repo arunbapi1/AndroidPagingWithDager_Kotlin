@@ -1,12 +1,14 @@
-package com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide
+package com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.repository
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.model.News
+import com.sharmadhiraj.androidpaginglibrarystepbystepimplementationguide.network.NetworkService
 import io.reactivex.disposables.CompositeDisposable
 
-class NewsDataSourceFactory(
-        private val compositeDisposable: CompositeDisposable,
-        private val networkService: NetworkService)
+class NewsDataSourceFactory(private val networkService: NetworkService,
+        private val compositeDisposable: CompositeDisposable
+        )
     : DataSource.Factory<Int, News>() {
 
     val newsDataSourceLiveData = MutableLiveData<NewsDataSource>()
